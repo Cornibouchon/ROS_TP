@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: gripx_description
+    relative_path: urdf/gripx_gazebo.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/gripx.srdf
+  CONFIG:
+    author_name: Patrice Gobat
+    author_email: gobatp@ethz.ch
+    generated_timestamp: 1612362998

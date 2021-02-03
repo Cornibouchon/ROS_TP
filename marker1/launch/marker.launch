@@ -1,0 +1,17 @@
+<launch>
+
+    <!-- Robot namespace 
+    <arg name="robot_name" default="my_gen3"/>
+    <arg name="start_delay_seconds" default="0"/>
+    -->
+
+    <!-- Launch the example in that namespace -->
+    <node name="marker_all_in1" pkg="marker1" type="marker_all_in1" output="screen">
+    </node>
+
+    
+    <node name="position_publisher" pkg="marker1" type="position_publisher" output="screen">
+    </node>
+
+
+</launch>

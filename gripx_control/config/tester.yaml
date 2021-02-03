@@ -1,0 +1,16 @@
+#The JoiintGroupPositionController controls all joints by specifying
+#the position with an array of floats. 
+  joint_State_controler:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  arm_position controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+      - joint_6
+

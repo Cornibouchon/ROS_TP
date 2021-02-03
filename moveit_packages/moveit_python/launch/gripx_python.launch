@@ -1,0 +1,12 @@
+<?xml version="1.0"  encoding="utf-8" ?>
+
+<launch>
+
+    <!-- Robot namespace -->
+    <arg name="robot_name" default="gripx"/>
+    <arg name="start_delay_seconds" default="0"/>
+
+    <!-- Launch the example in that namespace -->
+    <node name="moveit_example" pkg="moveit_packages" type="moveit_python.py" ns="$(arg robot_name)" output="screen" launch-prefix="bash -c 'sleep $(arg start_delay_seconds); $0 $@' "/>
+
+</launch>
