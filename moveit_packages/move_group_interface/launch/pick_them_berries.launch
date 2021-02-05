@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="pick_them_berries" pkg="moveit_packages" type="pick_them_berries" respawn="false" output="screen">
+  </node>
+
+</launch>

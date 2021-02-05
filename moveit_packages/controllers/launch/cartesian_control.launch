@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="cartesian_control" pkg="moveit_packages" type="cartesian_control" respawn="false" output="screen">
+  </node>
+
+</launch>

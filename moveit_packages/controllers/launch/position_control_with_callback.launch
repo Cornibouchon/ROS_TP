@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="position_control_with_callback" pkg="moveit_packages" type="position_control_with_callback" respawn="false" output="screen">
+  </node>
+
+</launch>

@@ -6,6 +6,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(catkin REQUIRED
   COMPONENTS
+    marker1
     interactive_markers
     moveit_core
     moveit_ros_planning
@@ -52,14 +53,15 @@ include_directories(SYSTEM ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_
 
 add_subdirectory(moveit_cpp)
 
-
+add_subdirectory(move_group_interface)
+add_subdirectory(controllers)
 # add_subdirectory(controller_configuration)
 # add_subdirectory(hand_eye_calibration)
 # add_subdirectory(interactivity)
 # add_subdirectory(kinematics)
 # add_subdirectory(motion_planning_api)
 # add_subdirectory(motion_planning_pipeline)
-add_subdirectory(move_group_interface)
+
 # add_subdirect# ory(move_group_python_interface)
 # add_subdirectory(perception_pipeline)
 # add_subdirectory(pick_place)
@@ -75,3 +77,4 @@ add_subdirectory(move_group_interface)
 # add_subdirectory(collision_environments)
 # add_subdirectory(visualizing_collisions)
 # add_subdirectory(bullet_collision_checker)
+
