@@ -30,7 +30,7 @@ roslaunch gripx_gazebo gazebo.launch
 
 roslaunch gripx_moveit_config moveit_planning_execution.launch
 
-In case the motion planning gui does not show up, simply add it in moveit.
+In case the motion planning gui does not show up, simply add it in rviz.
 
 3)Launch the different controllers with:
 roslaunch moveit_packages cartesian_control.launch
