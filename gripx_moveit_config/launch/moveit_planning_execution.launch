@@ -4,16 +4,16 @@
 
 	<!-- does not make MoveIt/Gazebo use the fake controllers, it only makes sure that joint_state_publisher gathers the JointStates published on /move_group/fake_controller_joint_states and republishes them on /joint_states. -->
 	<!-- https://answers.ros.org/question/252114/failed-to-validate-trajectory-couldnt-receive-full-current-joint-state-within-1s-error/ -->
-<!-- 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="false"/>
-    <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
-  </node> -->
+    <rosparam param="/source_list">[/gazebo]</rosparam>
+  </node>
 
 
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="false"/>
     <rosparam param="/source_list">[/joint_states]</rosparam>
-  </node>
+  </node> -->
 
 
 	<!-- Load the SRDF and other configuration files -->
