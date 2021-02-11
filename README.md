@@ -38,8 +38,6 @@ roslaunch moveit_packages pose_control.launch
 roslaunch moveit_package position_control.launch 
 roslaunch moveit_package position_control_with_callback.launch
 
-position_control_with_callback.launch does not work yet
-
 The goal until next friday woud be, to adapt the controllers in such a way, that they subscribe to a topic where the
 end positions are published to (same as used in the marker1 package).
 
@@ -48,8 +46,8 @@ Part 1: Posecontrol to the location but -0.1m in z-direction.
 Part 2: Cartesian control along the z axis, 0.1m
 Part 3: Move the arm to a predefined deploy location
 
-If there are any questions, feel free to drop me a line
-Ps: Sorry for the formatting issues, next time i will look into it.
+pose_control.cpp as functionality 1 and 2 included, but i am currently struggling with the right quaternion orientation.
+
 
 
 
