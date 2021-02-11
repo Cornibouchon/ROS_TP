@@ -10,7 +10,7 @@
       file="$(find gripx_control)/config/kinova_position.yaml" />
 
       <!-- Load the controllers from ros -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" ns="/"
         args="joint_state_controller
         arm_position_controller"/>
     <!-- Lad Rviz Config -->
