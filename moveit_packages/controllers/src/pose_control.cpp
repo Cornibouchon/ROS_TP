@@ -97,8 +97,8 @@ int main(int argc, char** argv)
     cout << count;
     move_group.move();
     ++count;
-    start_state.setFromIK(joint_model_group, target_pose1);
-    move_group.setStartState(start_state);
+    // start_state.setFromIK(joint_model_group, target_pose1);
+    // move_group.setStartState(start_state);
 
      // Planning a Cartesian Path by interpolating through waypoints
 
@@ -113,10 +113,10 @@ int main(int argc, char** argv)
     target_pose.position.z += 0.1;
     waypoints.push_back(target_pose);  // down
 
-    target_pose.position.z -= 0.1;
+    target_pose.position.z += 0.1;
     waypoints.push_back(target_pose);  // down
 
-    target_pose.position.z -= 0.1;
+    target_pose.position.z += 0.1;
     waypoints.push_back(target_pose);  // up and left
 
     // Set a slower execution speed

@@ -1,21 +1,16 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="model" default="$(find gripx_description)/urdf/gripx_gazebo.urdf"/>
-
-
-  <!-- TODO -->
   <!-- Load the joint state controller file in the namespace ns to the parameter server not yet working-->
-  <rosparam command="load"
-    file="$(find gripx_control)/config/kinova_joint_state.yaml"
-    ns="joint_state_controller" />
+    <rosparam command="load"
+      file="$(find gripx_control)/config/kinova_joint_state.yaml"/>
 
     <!-- Load the position controller file in the namespace ns to the parameter server-->
     <rosparam command="load"
-      file="$(find gripx_control)/config/kinova_position.yaml"
-      ns="arm_position_controller" />
+      file="$(find gripx_control)/config/kinova_position.yaml" />
 
       <!-- Load the controllers from ros -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" ns="/"
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
         args="joint_state_controller
         arm_position_controller"/>
     <!-- Lad Rviz Config -->
@@ -26,4 +21,3 @@
 
     
 </launch>
-

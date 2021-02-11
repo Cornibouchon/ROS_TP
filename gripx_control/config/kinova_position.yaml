@@ -1,7 +1,7 @@
 #The JoiintGroupPositionController controls all joints by specifying
 #the position with an array of floats. 
 arm_position_controller:
-  type: position_controllers/JointGroupPositionController
+  type: position_controllers/JointTrajectoryController
   joints:
    - joint_1
    - joint_2
