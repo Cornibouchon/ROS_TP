@@ -76,7 +76,7 @@ int main(int argc, char** argv)
 
   while (ros::ok())
   {
-    // Set a faster
+    // Set a faster spped
     move_group.setMaxVelocityScalingFactor(1);
     cout << "Enter: X: Y: Z:" <<endl;
     cin >> target_pose1.position.x >>target_pose1.position.y >> target_pose1.position.z;
@@ -87,11 +87,11 @@ int main(int argc, char** argv)
     printf("the arc tangent is %f \n", yaw);
 
     //Calculate the quaternions
-    myQuaternion.setRPY( -1.5707, 0, 0 );  // Create this quaternion from roll/pitch/yaw (in radians)
+    myQuaternion.setRPY( -1.5707, 0, 2*1.5707 - yaw );  // Create this quaternion from roll/pitch/yaw (in radians)
     q_rot.setRPY(0, yaw, 0);
 
-    //Calculate the new orientation
-    myQuaternion = myQuaternion * q_rot;
+    // //Calculate the new orientation
+    // myQuaternion = myQuaternion * q_rot;
 
     // Normalize to 1
     myQuaternion.normalize();
@@ -108,6 +108,11 @@ int main(int argc, char** argv)
     //   move_group.getEndEffectorLink());
     // move_group.setGoalOrientationTolerance(1);
     move_group.setPoseTarget(target_pose1, move_group.getEndEffectorLink());
+
+    printf("The getPoseReferenceFrame ist\n");
+    cout << move_group.getPoseReferenceFrame();
+    printf("The EndeffectorLink is :\n");
+    cout << move_group.getEndEffectorLink();
     // move_group.setApproximateJointValueTarget(target_pose1, move_group.getEndEffectorLink());
     printf("Moving to %i target \n", count);
     move_group.move();
@@ -122,41 +127,40 @@ int main(int argc, char** argv)
     std::vector<geometry_msgs::Pose> waypoints;
 
        //Push the current endeffector pose inte the vector
-    waypoints.push_back(target_pose1);
+    // waypoints.push_back(target_pose1);
+    // geometry_msgs::Pose target_pose = target_pose1;
+    // //Push target poses
+    // target_pose.position.z += 0.05;
+    // waypoints.push_back(target_pose);  // down
 
-    geometry_msgs::Pose target_pose = target_pose1;
+    // target_pose.position.z += 0.05;
+    // waypoints.push_back(target_pose);  // down
 
-    target_pose.position.z += 0.05;
-    waypoints.push_back(target_pose);  // down
+    // target_pose.position.z += 0.05;
+    // waypoints.push_back(target_pose);  // up and left
 
-    target_pose.position.z += 0.05;
-    waypoints.push_back(target_pose);  // down
+    // // Set a slower execution speed
+    // move_group.setMaxVelocityScalingFactor(0.1);
 
-    target_pose.position.z += 0.05;
-    waypoints.push_back(target_pose);  // up and left
+    // //Give the planner more time
+    // move_group.setPlanningTime(15.0);
 
-    // Set a slower execution speed
-    move_group.setMaxVelocityScalingFactor(0.1);
+    // //allow several planning attemps
+    // move_group.setNumPlanningAttempts(3);
 
-    //Give the planner more time
-    move_group.setPlanningTime(15.0);
+    // // // We want the Cartesian path to be interpolated at a resolution of 1 cm
+    // // // which is why we will specify 0.01 as the max step in Cartesian
+    // // // translation.  We will specify the jump threshold as 0.0, effectively disabling it.
+    // // // Warning - disabling the jump threshold while operating real hardware can cause
+    // // // large unpredictable motions of redundant joints and could be a safety issue
+    // moveit_msgs::RobotTrajectory trajectory;
+    // const double jump_threshold = 0.0;
+    // const double eef_step = 0.01;
+    // double fraction = move_group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+    // ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (Cartesian path) (%.2f%% acheived)", fraction * 100.0);
 
-    //allow several planning attemps
-    move_group.setNumPlanningAttempts(3);
-
-    // // We want the Cartesian path to be interpolated at a resolution of 1 cm
-    // // which is why we will specify 0.01 as the max step in Cartesian
-    // // translation.  We will specify the jump threshold as 0.0, effectively disabling it.
-    // // Warning - disabling the jump threshold while operating real hardware can cause
-    // // large unpredictable motions of redundant joints and could be a safety issue
-    moveit_msgs::RobotTrajectory trajectory;
-    const double jump_threshold = 0.0;
-    const double eef_step = 0.01;
-    double fraction = move_group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
-    ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (Cartesian path) (%.2f%% acheived)", fraction * 100.0);
-
-    //Execute the trajectory
-    move_group.execute(trajectory);
+    // //Execute the trajectory
+    // move_group.execute(trajectory);
 
   }
     
