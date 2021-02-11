@@ -22,34 +22,27 @@ The rest of the packages are basically the tutorials from moveit, which adapted 
 marker1: A small package to spawn some markers in rviz. This one works, but the topic to which the message is sent has to be updated.
 
 To spawn the robot and use the controllers:
-1) Spawn the robot in gazebo:
 
-roslaunch gripx_gazebo gazebo.launch 
+    Spawn the robot in gazebo:
 
-2) Load the moveit environment and rviz (opens 2 rviz for the moment)
+roslaunch gripx_gazebo gazebo.launch
+
+    Load the moveit environment and rviz (opens 2 rviz for the moment)
 
 roslaunch gripx_moveit_config moveit_planning_execution.launch
 
 In case the motion planning gui does not show up, simply add it in rviz.
 
-3)Launch the different controllers with:
-roslaunch moveit_packages cartesian_control.launch
-roslaunch moveit_packages pose_control.launch
-roslaunch moveit_package position_control.launch 
-roslaunch moveit_package position_control_with_callback.launch
+3)Launch the different controllers with: roslaunch moveit_packages cartesian_control.launch roslaunch moveit_packages pose_control.launch roslaunch moveit_package position_control.launch roslaunch moveit_package position_control_with_callback.launch
 
-position_control_with_callback.launch does not work yet
+The goal until next friday woud be, to adapt the controllers in such a way, that they subscribe to a topic where the end positions are published to (same as used in the marker1 package).
 
-The goal until next friday woud be, to adapt the controllers in such a way, that they subscribe to a topic where the
-end positions are published to (same as used in the marker1 package).
+After receiving the coordinates, the path planning should be split in 3 parts: Part 1: Posecontrol to the location but -0.1m in z-direction. Part 2: Cartesian control along the z axis, 0.1m Part 3: Move the arm to a predefined deploy location
 
-After receiving the coordinates, the path planning should be split in 3 parts:
-Part 1: Posecontrol to the location but -0.1m in z-direction.
-Part 2: Cartesian control along the z axis, 0.1m
-Part 3: Move the arm to a predefined deploy location
+pose_control.cpp as functionality 1 and 2 included, but i am currently struggling with the right quaternion orientation.
 
-If there are any questions, feel free to drop me a line
-Ps: Sorry for the formatting issues, next time i will look into it.
+
+
 
 
 
