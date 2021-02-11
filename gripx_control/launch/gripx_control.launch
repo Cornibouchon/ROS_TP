@@ -7,7 +7,7 @@
   <!-- Load the joint state controller file in the namespace ns to the parameter server not yet working-->
   <rosparam command="load"
     file="$(find gripx_control)/config/kinova_joint_state.yaml"
-    ns="gripx_joint_state_controller" />
+    ns="joint_state_controller" />
 
     <!-- Load the position controller file in the namespace ns to the parameter server-->
     <rosparam command="load"
@@ -16,7 +16,7 @@
 
       <!-- Load the controllers from ros -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" ns="/"
-        args="gripx_joint_state_controller
+        args="joint_state_controller
         arm_position_controller"/>
     <!-- Lad Rviz Config -->
     <arg name="gui" default="true" />
