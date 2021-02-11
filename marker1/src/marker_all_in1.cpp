@@ -10,12 +10,12 @@
 
 using namespace std;
 //function prototype to create marker
-void create_marker(float x_cart, float y_cart, float z_cart, int id);
+void create_marker(float x_cart, float y_cart, float z_cart, int id, int action);
 
 //TODO: Pass the message arguments to the real variables
 void chatterCallback(const marker1::point_msg::ConstPtr& msg)
 {
-  create_marker(msg->x_coord, msg->y_coord, msg->z_coord, msg->id);
+  create_marker(msg->x_coord, msg->y_coord, msg->z_coord, msg->id, msg->action);
   //ROS_INFO("I heard: [%s]", msg->data.c_str());
 }
 
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     //}
   }
 
-void create_marker(float x_cart, float y_cart, float z_cart, int id)
+void create_marker(float x_cart, float y_cart, float z_cart, int id, int action)
 {
   //ros::init(argc, argv, "create_marker");
   ros::NodeHandle n;
@@ -63,7 +63,7 @@ void create_marker(float x_cart, float y_cart, float z_cart, int id)
   // uint32_t shape = visualization_msgs::Marker::MESH_RESOURCE;
   uint32_t shape = visualization_msgs::Marker::SPHERE;
 
-  for(int i =0; i<10;++i)
+  for(int i =0; i<5;++i)
   {
     visualization_msgs::Marker marker;
     // Set the frame ID and timestamp.  See the TF tutorials for information on these.
@@ -75,7 +75,7 @@ void create_marker(float x_cart, float y_cart, float z_cart, int id)
     marker.ns = "namespace";
     marker.id = id;
 
-    // Set the marker type.  Initially this is CUBE, and cycles between that and SPHERE, ARROW, and CYLINDER
+    // Set the marker type.
     marker.type = shape;
 
     //Linkk to the strawberry
@@ -83,14 +83,14 @@ void create_marker(float x_cart, float y_cart, float z_cart, int id)
 
 
     // Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
-    /*if(create_destroy==1){
+    if(action == 1){
       marker.action = visualization_msgs::Marker::ADD;
     }
     else{
       marker.action = visualization_msgs::Marker::DELETE;
     }
-    */
-    marker.action = visualization_msgs::Marker::ADD;
+    
+    // marker.action = visualization_msgs::Marker::ADD;
     // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
     marker.pose.position.x = x_cart;
     marker.pose.position.y = y_cart;
@@ -101,9 +101,9 @@ void create_marker(float x_cart, float y_cart, float z_cart, int id)
     marker.pose.orientation.w = 1.0;
 
     // Set the scale of the marker -- 1x1x1 here means 1m on a side
-    marker.scale.x = 0.1;
-    marker.scale.y = 0.1;
-    marker.scale.z = 0.1;
+    marker.scale.x = 0.045;
+    marker.scale.y = 0.045;
+    marker.scale.z = 0.045;
 
     // Set the color -- be sure to set alpha to something non-zero!
     marker.color.r = 1.0f;

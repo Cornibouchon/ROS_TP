@@ -39,9 +39,9 @@ int main(int argc, char **argv)
     //std::stringstream ss;
 
     // Ask for the coordinates + id from the user
-    cout << "Enter: X; Y: Z; ID" <<endl;
+    cout << "Enter: X; Y: Z; ID; Action" <<endl;
     // Transfer dthe ID 
-    cin >> msg.x_coord >> msg.y_coord >>msg.z_coord >>msg.id;
+    cin >> msg.x_coord >> msg.y_coord >>msg.z_coord >>msg.id >>msg.action;
 
 
     //msg.data = ss.str();
