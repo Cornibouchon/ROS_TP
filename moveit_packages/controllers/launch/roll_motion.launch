@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="roll_motion" pkg="moveit_packages" type="roll_motion" respawn="false" output="screen">
+  </node>
+
+</launch>
