@@ -9,8 +9,6 @@
 
 #include <moveit_visual_tools/moveit_visual_tools.h>
 
-
-
 #include <sstream>
 #include <iostream>
 #include <math.h>
@@ -24,6 +22,7 @@ using namespace std;
 #include <marker1/point_msg.h>
 
 #include <controllers/utils.h>
+#include <vector>
 
 
 int main(int argc, char** argv)
@@ -64,7 +63,7 @@ int main(int argc, char** argv)
 
   // Define all variables needed within the loop
   double yaw = 0.0;
-   int count = 0;
+  int count = 0;
 
 
 
@@ -77,22 +76,11 @@ int main(int argc, char** argv)
     move_group.setNumPlanningAttempts(3);
 
     //Read coordinates from terminal and store in target pose
-    cout << "Enter: X: Y: Z:" <<endl;
-    cin >> target_pose1.position.x >>target_pose1.position.y >> target_pose1.position.z;
-
-    // Calculate the needed yaw angle needed from the coordinates
-    yaw = atan2(target_pose1.position.y, target_pose1.position.x);
-    //Calculate the quaternions
-    myQuaternion.setRPY( -1.5707, 0, PI + yaw );  // Create this quaternion from roll/pitch/yaw (in radians)
-    // Normalize to 1
-    myQuaternion.normalize();
-
-    //Transfer the values of of the created Quaternion
-    target_pose1.orientation.x = myQuaternion[0];
-    target_pose1.orientation.y = myQuaternion[1];
-    target_pose1.orientation.z = myQuaternion[2];
-    target_pose1.orientation.w = myQuaternion[3];
-
+    double x_cart,y_cart,z_cart;
+    double roll_ofs, pitch_ofs, yaw_ofs;
+    cout << "Enter: X: Y: Z: Roll_ofs: Pitch_ofs:, Yaw_offset" <<endl;
+    cin >> x_cart >> y_cart >> z_cart >> roll_ofs >> pitch_ofs >> yaw_ofs;
+    target_pose1 = start_pose_radial(x_cart,y_cart,z_cart);
 
     //fill the marker_message
     msg.x_coord = target_pose1.position.x;
@@ -103,29 +91,31 @@ int main(int argc, char** argv)
     //advertise the msg
     publisher.publish(msg);
 
-
     //Define and substract the offset for the cartesian path planning
-    double offset = 0.10;
-    target_pose1.position.z -= offset;
+    double x_offset = 0.03;
+    double y_offset = 0.03;
+    double z_offset = 0.10;
+
+    target_pose1 = pose_offset_cart(x_offset, y_offset, z_offset,target_pose1);
+
+    //Substract the initial offset
+    target_pose1 = pose_rotation(-roll_ofs, -pitch_ofs,-yaw_ofs,target_pose1);
 
     //Set Target Pose
     move_group.setPoseTarget(target_pose1, move_group.getEndEffectorLink());
     //Set a orientation tolerance
     move_group.setGoalOrientationTolerance(0.02);
     printf("Moving to %i target \n", count);
+
     move_group.move();
     ++count;
 
+    // Path planning through waypoints
+    vector<geometry_msgs::Pose> waypoints1;
     // implement simple roll motion by planning n waypoints and interpolating the roll from start poser
-    //Create a vector of poses
-    std::vector<geometry_msgs::Pose> waypoints1;
-    waypoints1 = n_interpolate_rpy(4, 30, 0, 0, 0.1, target_pose1 );
-
-
-
+    waypoints1 = n_interpolate_rpy(5, roll_ofs, pitch_ofs, yaw_ofs, x_offset, y_offset, z_offset, target_pose1);
     // Set a slower execution speed
     move_group.setMaxVelocityScalingFactor(0.1);
-
     //Give the planner more time
     move_group.setPlanningTime(15.0);
 
@@ -139,16 +129,12 @@ int main(int argc, char** argv)
     const double eef_step = 0.005;
     double fraction = move_group.computeCartesianPath(waypoints1, eef_step, jump_threshold, trajectory);
     ROS_INFO_NAMED("tutorial", "Visualizing plan %i (Cartesian path) (%.2f%% acheived)",count,  fraction * 100.0);
-
     //Execute the trajectory
     move_group.execute(trajectory);
 
     // Change the message to destroy the marker and publish it
     msg.action = 2;
     publisher.publish(msg);
-
-    //attach the collision object
-    // move_group.attachObject(collision_object.id);
   }
     
   ros::shutdown();
